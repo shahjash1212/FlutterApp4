@@ -55,31 +55,34 @@ class ImageShow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ImageSlideshow(
-      width: double.infinity,
-      height: 350,
-      initialPage: 0,
-      indicatorColor: Colors.blue,
-      indicatorBackgroundColor: Colors.grey,
-      onPageChanged: (value) {
-        debugPrint('Page changed: $value');
-      },
-      autoPlayInterval: 10000,
-      isLoop: true,
-      children: [
-        Image.asset(
-          'assets/10.png',
-          fit: BoxFit.fitWidth,
-        ),
-        Image.asset(
-          'assets/8.png',
-          fit: BoxFit.fitWidth,
-        ),
-        Image.asset(
-          'assets/9.png',
-          fit: BoxFit.fitWidth,
-        ),
-      ],
+    return Padding(
+      padding: const EdgeInsets.only(left: 15, right: 15),
+      child: ImageSlideshow(
+        width: double.infinity,
+        height: 350,
+        initialPage: 0,
+        indicatorColor: Colors.blue,
+        indicatorBackgroundColor: Colors.grey,
+        onPageChanged: (value) {
+          debugPrint('Page changed: $value');
+        },
+        autoPlayInterval: 10000,
+        isLoop: true,
+        children: [
+          Image.asset(
+            'assets/10.png',
+            fit: BoxFit.fitWidth,
+          ),
+          Image.asset(
+            'assets/8.png',
+            fit: BoxFit.fitWidth,
+          ),
+          Image.asset(
+            'assets/9.png',
+            fit: BoxFit.fitWidth,
+          ),
+        ],
+      ),
     );
   }
 }
@@ -119,7 +122,7 @@ class SizeBottom extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(8.0),
+      padding: const EdgeInsets.only(top: 8.0, left: 15, right: 15, bottom: 18),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: const [
@@ -145,6 +148,7 @@ class Size extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      padding: EdgeInsets.only(left: 8, right: 8),
       height: 80,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(15),
@@ -185,7 +189,7 @@ class BottomRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(10.0),
+      padding: const EdgeInsets.only(left: 15.0, right: 15.0, bottom: 5),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: const [

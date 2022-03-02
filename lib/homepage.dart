@@ -1,3 +1,4 @@
+import 'package:application1/userpage.dart';
 import 'package:flutter/material.dart';
 
 import 'detailscreen.dart';
@@ -44,7 +45,7 @@ class NavBarBottom extends StatelessWidget {
     return BottomNavigationBar(
       elevation: 0,
       type: BottomNavigationBarType.fixed,
-      items: const [
+      items: [
         BottomNavigationBarItem(
             icon: Icon(
               Icons.home,
@@ -66,9 +67,15 @@ class NavBarBottom extends StatelessWidget {
           label: 'Shop',
         ),
         BottomNavigationBarItem(
-          icon: Icon(
-            Icons.person,
-            color: Colors.black,
+          icon: InkWell(
+            onTap: () => Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => UserPage()),
+            ),
+            child: Icon(
+              Icons.person,
+              color: Colors.black,
+            ),
           ),
           label: 'User',
         ),
@@ -172,11 +179,13 @@ class BottomGrid extends StatelessWidget {
                                 child: Text(
                                   "30% OFF",
                                   style: TextStyle(
-                                      fontSize: 12, color: Colors.blue),
+                                      fontSize: 12,
+                                      color: Colors.blue,
+                                      fontWeight: FontWeight.w700),
                                 ),
                               ),
                               decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(40),
+                                  borderRadius: BorderRadius.circular(30),
                                   color: Colors.white),
                             ),
                             const Icon(
@@ -187,6 +196,7 @@ class BottomGrid extends StatelessWidget {
                         ),
                       ),
                       Container(
+                        margin: EdgeInsets.only(left: 2, right: 2),
                         height: 135,
                         decoration: BoxDecoration(
                             image: DecorationImage(
@@ -250,7 +260,7 @@ class TopCategories extends StatelessWidget {
                   "See All",
                   style: TextStyle(
                       fontSize: 14,
-                      fontWeight: FontWeight.w200,
+                      fontWeight: FontWeight.w400,
                       color: Colors.blue),
                 ),
               ],
@@ -269,9 +279,11 @@ class TopCategories extends StatelessWidget {
                 itemCount: 5,
                 itemBuilder: (context, index) {
                   return Padding(
-                    padding: EdgeInsets.all(15.0),
+                    padding: EdgeInsets.only(left: 10.0, right: 10.0),
                     child: Container(
-                      width: 100,
+                      width: 75,
+                      margin:
+                          EdgeInsets.only(left: 1, right: 1, top: 6, bottom: 6),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(15),
                         image: const DecorationImage(
