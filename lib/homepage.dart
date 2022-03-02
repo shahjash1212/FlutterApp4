@@ -17,15 +17,17 @@ class HomePage extends StatelessWidget {
           Search(),
         ],
       ),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: const [
-          TopText(),
-          BelowText(),
-          Discount(),
-          TopCategories(),
-          BottomGrid(),
-        ],
+      body: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: const [
+            TopText(),
+            BelowText(),
+            Discount(),
+            TopCategories(),
+            BottomGrid(),
+          ],
+        ),
       ),
       bottomNavigationBar: NavBarBottom(),
     );
@@ -133,11 +135,12 @@ class BottomGrid extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       height: 310,
+      margin: EdgeInsets.only(left: 15, right: 15),
       color: Colors.white,
       child: GridView.builder(
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisSpacing: 8,
-          mainAxisSpacing: 8,
+          crossAxisSpacing: 5,
+          mainAxisSpacing: 5,
           crossAxisCount: 2,
           childAspectRatio: .7,
         ),
@@ -152,7 +155,7 @@ class BottomGrid extends StatelessWidget {
                   height: 70,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(12),
-                    color: Colors.lightBlue,
+                    color: Color(0xfff4f8fb),
                   ),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -253,30 +256,33 @@ class TopCategories extends StatelessWidget {
               ],
             ),
           ),
-          Container(
-            height: 90,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(15),
-            ),
-            child: ListView.builder(
-              scrollDirection: Axis.horizontal,
-              itemCount: 5,
-              itemBuilder: (context, index) {
-                return Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Container(
-                    height: 85,
-                    width: 80,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(15),
-                      image: const DecorationImage(
-                          image: ExactAssetImage("assets/3.png"),
-                          fit: BoxFit.fitWidth),
-                      color: Colors.grey[200],
+          Padding(
+            padding: const EdgeInsets.all(5.0),
+            child: Container(
+              height: 80,
+              padding: EdgeInsets.all(2),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(15),
+              ),
+              child: ListView.builder(
+                scrollDirection: Axis.horizontal,
+                itemCount: 5,
+                itemBuilder: (context, index) {
+                  return Padding(
+                    padding: EdgeInsets.all(15.0),
+                    child: Container(
+                      width: 100,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(15),
+                        image: const DecorationImage(
+                            image: ExactAssetImage("assets/3.png"),
+                            fit: BoxFit.fitWidth),
+                        color: Colors.grey[200],
+                      ),
                     ),
-                  ),
-                );
-              },
+                  );
+                },
+              ),
             ),
           ),
         ],
