@@ -36,6 +36,7 @@ dependencies:
   flutter_svg: ^1.0.3 #svg file
   animations: ^2.0.2
   cr_calendar: ^0.0.9
+  flutter_image_slideshow: ^0.1.2
 
 dev_dependencies:
   flutter_test:

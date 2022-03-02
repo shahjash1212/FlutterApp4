@@ -278,7 +278,7 @@ class TopCategories extends StatelessWidget {
                 );
               },
             ),
-          )
+          ),
         ],
       ),
     );
