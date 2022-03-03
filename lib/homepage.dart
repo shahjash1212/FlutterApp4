@@ -12,8 +12,25 @@ class HomePage extends StatelessWidget {
       backgroundColor: Colors.white,
       drawer: Drower(),
       appBar: AppBar(
+        leading: Container(
+          height: 25,
+          decoration: BoxDecoration(
+              color: Color(0xfff4f8fb),
+              borderRadius: BorderRadius.circular(20)),
+          child: Builder(
+            builder: (context) => IconButton(
+              icon: Container(
+                child: Icon(
+                  Icons.menu_rounded,
+                  color: Colors.black,
+                ),
+              ),
+              onPressed: () => Scaffold.of(context).openDrawer(),
+            ),
+          ),
+        ),
         elevation: 0,
-        backgroundColor: Colors.blue,
+        backgroundColor: Colors.white,
         actions: const [
           Search(),
         ],
@@ -70,7 +87,7 @@ class NavBarBottom extends StatelessWidget {
           icon: InkWell(
             onTap: () => Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => UserPage()),
+              MaterialPageRoute(builder: (context) => const UserPage()),
             ),
             child: Icon(
               Icons.person,
@@ -140,98 +157,95 @@ class BottomGrid extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 310,
-      margin: EdgeInsets.only(left: 15, right: 15),
-      color: Colors.white,
-      child: GridView.builder(
-        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisSpacing: 5,
-          mainAxisSpacing: 5,
-          crossAxisCount: 2,
-          childAspectRatio: .7,
-        ),
-        itemCount: 6,
-        itemBuilder: (context, index) {
-          return Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: InkWell(
-              onTap: () => Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => DetailScreen())),
-              child: Container(
-                  height: 70,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(12),
-                    color: Color(0xfff4f8fb),
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.all(15.0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Container(
-                              height: 20,
-                              padding: EdgeInsets.all(2),
-                              child: const Center(
-                                child: Text(
-                                  "30% OFF",
-                                  style: TextStyle(
-                                      fontSize: 12,
-                                      color: Colors.blue,
-                                      fontWeight: FontWeight.w700),
-                                ),
-                              ),
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(30),
-                                  color: Colors.white),
-                            ),
-                            const Icon(
-                              Icons.favorite,
-                              color: Colors.pink,
-                            ),
-                          ],
-                        ),
-                      ),
-                      Container(
-                        margin: EdgeInsets.only(left: 2, right: 2),
-                        height: 135,
-                        decoration: BoxDecoration(
-                            image: DecorationImage(
-                                image: ExactAssetImage("assets/1.png"),
-                                fit: BoxFit.fitWidth)),
-                      ),
-                      const Text(
-                        "  Nike Shoes",
-                        style: TextStyle(
-                            fontSize: 16, fontWeight: FontWeight.w500),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 8.0),
-                        child: Row(
-                          children: [
-                            const Text(
-                              "\$120 ",
-                              style: TextStyle(fontSize: 16),
-                            ),
-                            Text(
-                              "\$160",
-                              style: TextStyle(
-                                  color: Colors.grey[800],
-                                  fontSize: 12,
-                                  decoration: TextDecoration.lineThrough),
-                            )
-                          ],
-                        ),
-                      ),
-                    ],
-                  )),
-            ),
-          );
-        },
+    return GridView.builder(
+      shrinkWrap: true,
+      physics: NeverScrollableScrollPhysics(),
+      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisSpacing: 5,
+        mainAxisSpacing: 5,
+        crossAxisCount: 2,
+        childAspectRatio: .7,
       ),
+      itemCount: 6,
+      itemBuilder: (context, index) {
+        return Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: InkWell(
+            onTap: () => Navigator.push(context,
+                MaterialPageRoute(builder: (context) => DetailScreen())),
+            child: Container(
+                height: 70,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(12),
+                  color: Color(0xfff4f8fb),
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(15.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Container(
+                            height: 20,
+                            padding: EdgeInsets.all(2),
+                            child: const Center(
+                              child: Text(
+                                "30% OFF",
+                                style: TextStyle(
+                                    fontSize: 12,
+                                    color: Colors.blue,
+                                    fontWeight: FontWeight.w700),
+                              ),
+                            ),
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(30),
+                                color: Colors.white),
+                          ),
+                          const Icon(
+                            Icons.favorite,
+                            color: Colors.pink,
+                          ),
+                        ],
+                      ),
+                    ),
+                    Container(
+                      margin: EdgeInsets.only(left: 2, right: 2),
+                      height: 135,
+                      decoration: BoxDecoration(
+                          image: DecorationImage(
+                              image: ExactAssetImage("assets/1.png"),
+                              fit: BoxFit.fitWidth)),
+                    ),
+                    const Text(
+                      "  Nike Shoes",
+                      style:
+                          TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 8.0),
+                      child: Row(
+                        children: [
+                          const Text(
+                            "\$120 ",
+                            style: TextStyle(fontSize: 16),
+                          ),
+                          Text(
+                            "\$160",
+                            style: TextStyle(
+                                color: Colors.grey[800],
+                                fontSize: 12,
+                                decoration: TextDecoration.lineThrough),
+                          )
+                        ],
+                      ),
+                    ),
+                  ],
+                )),
+          ),
+        );
+      },
     );
   }
 }
@@ -391,15 +405,15 @@ class Search extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      height: 25,
       padding: const EdgeInsets.all(5),
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(15),
-      ),
+          borderRadius: BorderRadius.circular(15), color: Color(0xfff4f8fb)),
       child: const Padding(
         padding: EdgeInsets.all(10.0),
         child: Icon(
           Icons.search,
-          color: Colors.white,
+          color: Colors.black,
         ),
       ),
     );

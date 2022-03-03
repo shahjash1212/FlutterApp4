@@ -163,15 +163,15 @@ class Size extends StatelessWidget {
               width: 60,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(15),
-                color: Colors.blue,
+                color: Color(0xfff4f8fb),
               ),
               child: Center(
                   child: Text(
                 (index + 36).toString(),
                 style: const TextStyle(
-                    color: Colors.white,
+                    color: Colors.black,
                     fontSize: 18,
-                    fontWeight: FontWeight.w500),
+                    fontWeight: FontWeight.w800),
               )),
             ),
           );
@@ -244,7 +244,7 @@ class TopRight extends StatelessWidget {
       child: Container(
         height: 15,
         decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(15), color: Colors.grey[300]),
+            borderRadius: BorderRadius.circular(15), color: Color(0xfff4f8fb)),
         child: const Padding(
           padding: EdgeInsets.all(10.0),
           child: Icon(
@@ -269,7 +269,8 @@ class TopLeft extends StatelessWidget {
       child: Container(
           height: 15,
           decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(15), color: Colors.grey[300]),
+              borderRadius: BorderRadius.circular(15),
+              color: Color(0xfff4f8fb)),
           child: BackButton(color: Colors.black)),
     );
   }
