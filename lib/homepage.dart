@@ -1,7 +1,10 @@
+import 'package:application1/services/api_manager.dart';
 import 'package:application1/userpage.dart';
 import 'package:flutter/material.dart';
+import '';
 
 import 'detailscreen.dart';
+import 'models/shoesinfo.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -317,10 +320,23 @@ class TopCategories extends StatelessWidget {
   }
 }
 
-class Discount extends StatelessWidget {
+class Discount extends StatefulWidget {
   const Discount({
     Key? key,
   }) : super(key: key);
+
+  @override
+  State<Discount> createState() => _DiscountState();
+}
+
+class _DiscountState extends State<Discount> {
+  late Future<Shoes> _shoesModel;
+
+  @override
+  void initState() {
+    super.initState();
+    _shoesModel = API_MANAGER().getShoes();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -330,67 +346,83 @@ class Discount extends StatelessWidget {
       color: Colors.white,
       child: Stack(
         children: [
-          ListView.builder(
-            scrollDirection: Axis.horizontal,
-            shrinkWrap: true,
-            itemCount: 2,
-            itemBuilder: (context, index) {
-              return Padding(
-                padding: const EdgeInsets.all(15.0),
-                child: Container(
-                    height: 20,
-                    width: 300,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(15),
-                      color: Colors.blue,
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Column(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              const Text(
-                                "50% OFF DURING \nCOVID 19",
-                                style: TextStyle(
-                                    fontWeight: FontWeight.w400,
-                                    fontSize: 18,
-                                    color: Colors.white),
-                              ),
-                              Container(
-                                height: 40,
-                                width: 100,
-                                child: const Center(
-                                  child: Text(
-                                    "Get Now",
-                                    style: TextStyle(
-                                        fontSize: 15, color: Colors.blue),
+          FutureBuilder<Shoes>(
+              future: _shoesModel,
+              builder: (context, snapshot) {
+                if (snapshot.hasData) {
+                  return ListView.builder(
+                    scrollDirection: Axis.horizontal,
+                    shrinkWrap: true,
+                    itemCount: snapshot.data!.id[snapshot].length,
+                    
+                    itemBuilder: (context, index) {
+                      // var shoes = snapshot.data?.id[index];
+                      return Padding(
+                        padding: const EdgeInsets.all(15.0),
+                        child: Container(
+                          height: 20,
+                          width: 300,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(15),
+                            color: Colors.blue,
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Column(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    const Text(
+                                      "50% OFF DURING \nCOVID 19",
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.w400,
+                                          fontSize: 18,
+                                          color: Colors.white),
+                                    ),
+                                    Container(
+                                      height: 40,
+                                      width: 100,
+                                      child: const Center(
+                                        child: Text(
+                                          "Get Now",
+                                          style: TextStyle(
+                                              fontSize: 15, color: Colors.blue),
+                                        ),
+                                      ),
+                                      decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(40),
+                                          color: Colors.white),
+                                    ),
+                                  ],
+                                ),
+                                Container(
+                                  width: 120,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(15),
+                                    image: DecorationImage(
+                                        image: NetworkImage(
+                                            snapshot.data!.imageUrl[index]),
+                                        fit: BoxFit.contain),
                                   ),
                                 ),
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(40),
-                                    color: Colors.white),
-                              ),
-                            ],
-                          ),
-                          Container(
-                            width: 120,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(15),
-                              image: const DecorationImage(
-                                  image: ExactAssetImage("assets/2.png"),
-                                  fit: BoxFit.contain),
+                              ],
                             ),
                           ),
-                        ],
-                      ),
-                    )),
-              );
-            },
-          ),
+                        ),
+                      );
+                    },
+                  );
+                } else {
+                  return Center(
+                    child: CircularProgressIndicator(),
+                  );
+                }
+              }),
         ],
       ),
     );
