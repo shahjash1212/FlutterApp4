@@ -5,7 +5,7 @@ import 'package:application1/models/shoesinfo.dart';
 import 'package:http/http.dart' as http;
 
 class API_MANAGER {
-  Future<Shoes> getShoes() async {
+  Future<List<Shoes>> getShoes() async {
     var client = http.Client();
     var shoesModel;
 
@@ -25,6 +25,7 @@ class API_MANAGER {
     } catch (e, s) {
       print(e);
       print(s);
+      return shoesModel;
     }
     return shoesModel;
   }

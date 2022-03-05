@@ -330,7 +330,7 @@ class Discount extends StatefulWidget {
 }
 
 class _DiscountState extends State<Discount> {
-  late Future<Shoes> _shoesModel;
+  late Future<List<Shoes>> _shoesModel;
 
   @override
   void initState() {
@@ -346,14 +346,15 @@ class _DiscountState extends State<Discount> {
       color: Colors.white,
       child: Stack(
         children: [
-          FutureBuilder<Shoes>(
+          FutureBuilder<List<Shoes>>(
               future: _shoesModel,
               builder: (context, snapshot) {
                 if (snapshot.hasData) {
+                
                   return ListView.builder(
                     scrollDirection: Axis.horizontal,
                     shrinkWrap: true,
-                    itemCount: snapshot.data!.id[snapshot].length,
+                    itemCount: snapshot.data!.length,
                     
                     itemBuilder: (context, index) {
                       // var shoes = snapshot.data?.id[index];
@@ -406,7 +407,8 @@ class _DiscountState extends State<Discount> {
                                     borderRadius: BorderRadius.circular(15),
                                     image: DecorationImage(
                                         image: NetworkImage(
-                                            snapshot.data!.imageUrl[index]),
+                                            snapshot.data![index].imageUrl)
+                                            ,
                                         fit: BoxFit.contain),
                                   ),
                                 ),
@@ -485,3 +487,6 @@ class TopText extends StatelessWidget {
     );
   }
 }
+
+
+// List<int> function (){}
