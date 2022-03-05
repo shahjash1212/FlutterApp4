@@ -7,7 +7,7 @@ import 'package:http/http.dart' as http;
 class API_MANAGER {
   Future<List<Shoes>> getShoes() async {
     var client = http.Client();
-    var shoesModel;
+    List<Shoes> shoesModel = [];
 
     try {
       var response = await client.get(Uri.parse(
@@ -15,16 +15,13 @@ class API_MANAGER {
 
       print(jsonDecode(response.body));
       if (response.statusCode == 200) {
-        var jsonString = response.body;
-        // var jsonMap = jsonDecode(jsonString);
-        var jsonresponse = json.decode(response.body);
-
-        shoesModel = Shoes.fromJson(jsonresponse[0]);
-        // shoesModel = Shoes.fromJson();
+        shoesModel = List<Shoes>.from(
+            json.decode(response.body).map((data) => Shoes.fromJson(data)));
       }
     } catch (e, s) {
       print(e);
       print(s);
+
       return shoesModel;
     }
     return shoesModel;

@@ -8,7 +8,7 @@ List<Shoes> ShoesFromJson(String str) =>
     List<Shoes>.from(json.decode(str).map((x) => Shoes.fromJson(x)));
 
 String ShoesToJson(List<Shoes> data) =>
-    json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
+    json.encode(List<List<Shoes>>.from(data.map((x) => x.toJson())));
 
 class Shoes {
   Shoes({

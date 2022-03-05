@@ -1,7 +1,7 @@
 import 'package:application1/services/api_manager.dart';
 import 'package:application1/userpage.dart';
 import 'package:flutter/material.dart';
-import '';
+
 
 import 'detailscreen.dart';
 import 'models/shoesinfo.dart';
@@ -330,7 +330,7 @@ class Discount extends StatefulWidget {
 }
 
 class _DiscountState extends State<Discount> {
-  late Future<List<Shoes>> _shoesModel;
+  late Future <List<Shoes>> _shoesModel;
 
   @override
   void initState() {
