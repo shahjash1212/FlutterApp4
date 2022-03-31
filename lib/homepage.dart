@@ -2,7 +2,6 @@ import 'package:application1/services/api_manager.dart';
 import 'package:application1/userpage.dart';
 import 'package:flutter/material.dart';
 
-
 import 'detailscreen.dart';
 import 'models/shoesinfo.dart';
 
@@ -13,17 +12,17 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      drawer: Drower(),
+      drawer: const Drower(),
       appBar: AppBar(
         leading: Container(
           height: 25,
           decoration: BoxDecoration(
-              color: Color(0xfff4f8fb),
+              color: const Color(0xfff4f8fb),
               borderRadius: BorderRadius.circular(20)),
           child: Builder(
             builder: (context) => IconButton(
               icon: Container(
-                child: Icon(
+                child: const Icon(
                   Icons.menu_rounded,
                   color: Colors.black,
                 ),
@@ -50,7 +49,7 @@ class HomePage extends StatelessWidget {
           ],
         ),
       ),
-      bottomNavigationBar: NavBarBottom(),
+      bottomNavigationBar: const NavBarBottom(),
     );
   }
 }
@@ -66,20 +65,20 @@ class NavBarBottom extends StatelessWidget {
       elevation: 0,
       type: BottomNavigationBarType.fixed,
       items: [
-        BottomNavigationBarItem(
+        const BottomNavigationBarItem(
             icon: Icon(
               Icons.home,
               color: Colors.black,
             ),
             label: 'Home'),
-        BottomNavigationBarItem(
+        const BottomNavigationBarItem(
           icon: Icon(
             Icons.favorite_border_rounded,
             color: Colors.black,
           ),
           label: 'Favourite',
         ),
-        BottomNavigationBarItem(
+        const BottomNavigationBarItem(
           icon: Icon(
             Icons.shopping_bag,
             color: Colors.black,
@@ -92,7 +91,7 @@ class NavBarBottom extends StatelessWidget {
               context,
               MaterialPageRoute(builder: (context) => const UserPage()),
             ),
-            child: Icon(
+            child: const Icon(
               Icons.person,
               color: Colors.black,
             ),
@@ -153,101 +152,129 @@ class Drower extends StatelessWidget {
   }
 }
 
-class BottomGrid extends StatelessWidget {
+class BottomGrid extends StatefulWidget {
   const BottomGrid({
     Key? key,
   }) : super(key: key);
 
   @override
+  State<BottomGrid> createState() => _BottomGridState();
+}
+
+class _BottomGridState extends State<BottomGrid> {
+  late Future<List<Shoes>> _shoeModel;
+
+  @override
+  void initState() {
+    super.initState();
+    _shoeModel = API_MANAGER().getShoes();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return GridView.builder(
-      shrinkWrap: true,
-      physics: NeverScrollableScrollPhysics(),
-      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisSpacing: 5,
-        mainAxisSpacing: 5,
-        crossAxisCount: 2,
-        childAspectRatio: .7,
-      ),
-      itemCount: 6,
-      itemBuilder: (context, index) {
-        return Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: InkWell(
-            onTap: () => Navigator.push(context,
-                MaterialPageRoute(builder: (context) => DetailScreen())),
-            child: Container(
-                height: 70,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(12),
-                  color: Color(0xfff4f8fb),
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.all(15.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Container(
-                            height: 20,
-                            padding: EdgeInsets.all(2),
-                            child: const Center(
-                              child: Text(
-                                "30% OFF",
-                                style: TextStyle(
-                                    fontSize: 12,
-                                    color: Colors.blue,
-                                    fontWeight: FontWeight.w700),
+    return FutureBuilder<List<Shoes>>(
+      future: _shoeModel,
+      builder: (context, snapshot) {
+        if (snapshot.hasData) {
+          return GridView.builder(
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisSpacing: 5,
+              mainAxisSpacing: 5,
+              crossAxisCount: 2,
+              childAspectRatio: .7,
+            ),
+            itemCount: 6,
+            itemBuilder: (context, index) {
+              return Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: InkWell(
+                  onTap: () => Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) =>
+                              DetailScreen(shoeData: snapshot.data![index]))),
+                  child: Container(
+                    height: 70,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(12),
+                      color: const Color(0xfff4f8fb),
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.all(15.0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Container(
+                                height: 20,
+                                padding: const EdgeInsets.all(2),
+                                child: const Center(
+                                  child: Text(
+                                    "30% OFF",
+                                    style: TextStyle(
+                                        fontSize: 12,
+                                        color: Colors.blue,
+                                        fontWeight: FontWeight.w700),
+                                  ),
+                                ),
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(30),
+                                    color: Colors.white),
                               ),
-                            ),
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(30),
-                                color: Colors.white),
+                              const Icon(
+                                Icons.favorite,
+                                color: Colors.pink,
+                              ),
+                            ],
                           ),
-                          const Icon(
-                            Icons.favorite,
-                            color: Colors.pink,
+                        ),
+                        Container(
+                          margin: const EdgeInsets.only(left: 2, right: 2),
+                          height: 135,
+                          decoration: BoxDecoration(
+                            image: DecorationImage(
+                                image: NetworkImage(
+                                    snapshot.data![index].imageUrl),
+                                fit: BoxFit.contain),
                           ),
-                        ],
-                      ),
-                    ),
-                    Container(
-                      margin: EdgeInsets.only(left: 2, right: 2),
-                      height: 135,
-                      decoration: BoxDecoration(
-                          image: DecorationImage(
-                              image: ExactAssetImage("assets/1.png"),
-                              fit: BoxFit.fitWidth)),
-                    ),
-                    const Text(
-                      "  Nike Shoes",
-                      style:
-                          TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 8.0),
-                      child: Row(
-                        children: [
-                          const Text(
-                            "\$120 ",
-                            style: TextStyle(fontSize: 16),
+                        ),
+                        Text(
+                          ('${snapshot.data![index].productname}'),
+                          style: const TextStyle(
+                              fontSize: 16, fontWeight: FontWeight.w500),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(left: 8.0),
+                          child: Row(
+                            children: [
+                              Text(
+                                "\$ ${snapshot.data![index].price} ",
+                                style: const TextStyle(fontSize: 16),
+                              ),
+                              Text(
+                                "\$160.00",
+                                style: TextStyle(
+                                    color: Colors.grey[800],
+                                    fontSize: 12,
+                                    decoration: TextDecoration.lineThrough),
+                              )
+                            ],
                           ),
-                          Text(
-                            "\$160",
-                            style: TextStyle(
-                                color: Colors.grey[800],
-                                fontSize: 12,
-                                decoration: TextDecoration.lineThrough),
-                          )
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
-                  ],
-                )),
-          ),
-        );
+                  ),
+                ),
+              );
+            },
+          );
+        } else {
+          return const Center(child: CircularProgressIndicator());
+        }
       },
     );
   }
@@ -287,7 +314,7 @@ class TopCategories extends StatelessWidget {
             padding: const EdgeInsets.all(5.0),
             child: Container(
               height: 80,
-              padding: EdgeInsets.all(2),
+              padding: const EdgeInsets.all(2),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(15),
               ),
@@ -296,11 +323,11 @@ class TopCategories extends StatelessWidget {
                 itemCount: 5,
                 itemBuilder: (context, index) {
                   return Padding(
-                    padding: EdgeInsets.only(left: 10.0, right: 10.0),
+                    padding: const EdgeInsets.only(left: 10.0, right: 10.0),
                     child: Container(
                       width: 75,
-                      margin:
-                          EdgeInsets.only(left: 1, right: 1, top: 6, bottom: 6),
+                      margin: const EdgeInsets.only(
+                          left: 1, right: 1, top: 6, bottom: 6),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(15),
                         image: const DecorationImage(
@@ -330,7 +357,7 @@ class Discount extends StatefulWidget {
 }
 
 class _DiscountState extends State<Discount> {
-  late Future <List<Shoes>> _shoesModel;
+  late Future<List<Shoes>> _shoesModel;
 
   @override
   void initState() {
@@ -341,7 +368,7 @@ class _DiscountState extends State<Discount> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.all(8),
+      padding: const EdgeInsets.all(8),
       height: 200,
       color: Colors.white,
       child: Stack(
@@ -350,12 +377,10 @@ class _DiscountState extends State<Discount> {
               future: _shoesModel,
               builder: (context, snapshot) {
                 if (snapshot.hasData) {
-                
                   return ListView.builder(
                     scrollDirection: Axis.horizontal,
                     shrinkWrap: true,
                     itemCount: snapshot.data!.length,
-                    
                     itemBuilder: (context, index) {
                       // var shoes = snapshot.data?.id[index];
                       return Padding(
@@ -407,8 +432,7 @@ class _DiscountState extends State<Discount> {
                                     borderRadius: BorderRadius.circular(15),
                                     image: DecorationImage(
                                         image: NetworkImage(
-                                            snapshot.data![index].imageUrl)
-                                            ,
+                                            snapshot.data![index].imageUrl),
                                         fit: BoxFit.contain),
                                   ),
                                 ),
@@ -420,7 +444,7 @@ class _DiscountState extends State<Discount> {
                     },
                   );
                 } else {
-                  return Center(
+                  return const Center(
                     child: CircularProgressIndicator(),
                   );
                 }
@@ -442,7 +466,8 @@ class Search extends StatelessWidget {
       height: 25,
       padding: const EdgeInsets.all(5),
       decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(15), color: Color(0xfff4f8fb)),
+          borderRadius: BorderRadius.circular(15),
+          color: const Color(0xfff4f8fb)),
       child: const Padding(
         padding: EdgeInsets.all(10.0),
         child: Icon(

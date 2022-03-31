@@ -24,9 +24,9 @@ class Shoes {
   String id;
 
   factory Shoes.fromJson(Map<String, dynamic> json) => Shoes(
-        productname: json["productname"] ,
+        productname: json["productname"],
         price: json["price"].toDouble(),
-        imageUrl: json["imageURL"] ,
+        imageUrl: json["imageURL"],
         id: json["id"] ?? '',
       );
 

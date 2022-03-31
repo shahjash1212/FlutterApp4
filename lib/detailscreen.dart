@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_image_slideshow/flutter_image_slideshow.dart';
-
+import 'models/shoesinfo.dart';
 import 'addtocart.dart';
 
 class DetailScreen extends StatelessWidget {
-  const DetailScreen({Key? key}) : super(key: key);
+  final Shoes shoeData;
+  DetailScreen({Key? key, required this.shoeData}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -23,64 +23,33 @@ class DetailScreen extends StatelessWidget {
       ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
-        children: const [
-          ImageShow(),
-          NikeLogo(),
+        children: [
+          Padding(
+              padding: const EdgeInsets.only(left: 15, right: 15),
+              child: Container(
+                  width: double.infinity,
+                  height: 350,
+                  child: Image.network(
+                    shoeData.imageUrl,
+                    fit: BoxFit.fitWidth,
+                  ))),
+          const NikeLogo(),
           Text(
-            "Nike Air Max 87",
-            style: TextStyle(fontSize: 22, fontWeight: FontWeight.w900),
+            shoeData.productname,
+            style: const TextStyle(fontSize: 22, fontWeight: FontWeight.w900),
           ),
-          SizedBox(height: 10),
-          Text(
+          const SizedBox(height: 10),
+          const Text(
             "\$120.00",
             style: TextStyle(fontSize: 22, fontWeight: FontWeight.w700),
           ),
-          SizedBox(
+          const SizedBox(
             height: 10,
           ),
-          BottomRow(),
-          Size(),
-          SizeBottom(),
-          BelowButton(),
-        ],
-      ),
-    );
-  }
-}
-
-class ImageShow extends StatelessWidget {
-  const ImageShow({
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(left: 15, right: 15),
-      child: ImageSlideshow(
-        width: double.infinity,
-        height: 350,
-        initialPage: 0,
-        indicatorColor: Colors.blue,
-        indicatorBackgroundColor: Colors.grey,
-        onPageChanged: (value) {
-          debugPrint('Page changed: $value');
-        },
-        autoPlayInterval: 10000,
-        isLoop: true,
-        children: [
-          Image.asset(
-            'assets/10.png',
-            fit: BoxFit.fitWidth,
-          ),
-          Image.asset(
-            'assets/8.png',
-            fit: BoxFit.fitWidth,
-          ),
-          Image.asset(
-            'assets/9.png',
-            fit: BoxFit.fitWidth,
-          ),
+          const BottomRow(),
+          const Size(),
+          const SizeBottom(),
+          const BelowButton(),
         ],
       ),
     );
@@ -96,11 +65,11 @@ class BelowButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () => Navigator.push(
-          context, MaterialPageRoute(builder: (context) => AddToCart())),
+          context, MaterialPageRoute(builder: (context) => const AddToCart())),
       child: Container(
         height: 60,
         width: 300,
-        margin: EdgeInsets.all(8),
+        margin: const EdgeInsets.all(8),
         child: const Center(
           child: Text(
             "Add To Cart",
@@ -148,7 +117,7 @@ class Size extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.only(left: 8, right: 8),
+      padding: const EdgeInsets.only(left: 8, right: 8),
       height: 80,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(15),
@@ -163,7 +132,7 @@ class Size extends StatelessWidget {
               width: 60,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(15),
-                color: Color(0xfff4f8fb),
+                color: const Color(0xfff4f8fb),
               ),
               child: Center(
                   child: Text(
@@ -270,8 +239,8 @@ class TopLeft extends StatelessWidget {
           height: 15,
           decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(15),
-              color: Color(0xfff4f8fb)),
-          child: BackButton(color: Colors.black)),
+              color: const Color(0xfff4f8fb)),
+          child: const BackButton(color: Colors.black)),
     );
   }
 }
